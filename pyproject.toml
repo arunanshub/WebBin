@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Arunanshu Biswas <mydellpc07@gmail.com>"]
 readme = "README.md"
-packages = [{include = "encrypt_faggot"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
