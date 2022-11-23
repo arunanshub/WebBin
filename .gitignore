@@ -1,3 +1,7 @@
+# development and production sqlite databases
+data.db
+data-dev.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
