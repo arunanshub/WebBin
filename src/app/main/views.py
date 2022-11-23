@@ -3,7 +3,14 @@ from __future__ import annotations
 import secrets
 from typing import Any
 
-from flask import flash, redirect, render_template, request, session, url_for
+from flask import (
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    session,
+    url_for,
+)
 
 from .. import db
 from ..crypto import SecretData, decrypt_data, encrypt_data
@@ -17,7 +24,7 @@ def index() -> Any:
     form = DataForm()
     if form.validate_on_submit():
         # get the paste-id/slug or generate one if not provided
-        paste_id = form.paste_id.data or secrets.token_urlsafe(6)
+        paste_id = form.paste_id.data
         # encrypt the user's secret data
         secret_data = encrypt_data(form.text.data, form.password.data)
         # add the data to the database
@@ -32,18 +39,20 @@ def index() -> Any:
         db.session.commit()
         flash("Your secret has been stored!")
 
-        session["show_copy_button"] = True
-        session["paste_id"] = paste_id
+        return redirect(url_for(".ask_password", paste_id=paste_id))
 
-        return redirect(url_for(".index"))
+    # use a generated slug by default
+    form.paste_id.data = secrets.token_urlsafe(
+        current_app.config["DEFAULT_PASTE_ID_NUM_BYTES"]
+    )
     return render_template("index.html", form=form)
 
 
-@main.route("/reveal-secret/<string:paste_id>")
+@main.route("/<string:paste_id>/reveal")
 def reveal_secret(paste_id: str) -> Any:
     form = RevealForm()
     try:
-        secret_key = request.args["key"]
+        secret_key = session["key"]
     except KeyError:
         return redirect(url_for(".ask_password", paste_id=paste_id))
 
@@ -75,15 +84,16 @@ def reveal_secret(paste_id: str) -> Any:
     return render_template("reveal-secret.html", form=form)
 
 
-@main.route("/ask-password/<string:paste_id>", methods=["GET", "POST"])
+@main.route("/<string:paste_id>", methods=["GET", "POST"])
 def ask_password(paste_id: str) -> Any:
+    Secret.query.filter_by(paste_id=paste_id).first_or_404()
     form = AskPasswordForm()
     if form.validate_on_submit():
+        session["key"] = form.password.data
         return redirect(
             url_for(
                 ".reveal_secret",
                 paste_id=paste_id,
-                key=form.password.data,
             )
         )
     return render_template("ask-password.html", form=form)
