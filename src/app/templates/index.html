@@ -1,21 +1,15 @@
-{% extends "base.html" %}
+{% extends "_main.html" %}
 {% import "bootstrap5/form.html" as wtf %}
 
-{% block content %}
-<div class="container-sm position-relative position-absolute top-50 start-50 translate-middle">
-    {{ render_messages(dismissible=True, dismiss_animate=True) }}
-    <div class="row">
-        <div class="col">
-            {{ wtf.render_form(form, form_type="horizontal") }}
-        </div>
+{% block main_content %}
+<div class="row">
+    <div class="col">
+        <form method="post">
+            {{ form.csrf_token() }}
+            {{ wtf.render_field(form.text, class="font-monospace") }}
+            {{ wtf.render_form_row([form.password, form.paste_id]) }}
+            {{ wtf.render_field(form.submit) }}
+        </form>
     </div>
-
-    {% if session["show_copy_button"] %}
-    <div class="row">
-        <div class="col">
-            {{ url_for(".reveal_secret", paste_id=session["paste_id"], _external=True) }}
-        </div>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}

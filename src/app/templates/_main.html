@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container pt-5">
+    {{ render_messages(dismissible=True, dismiss_animate=True) }}
+    {% block main_content %}{% endblock main_content %}
+</div>
+{% endblock %}

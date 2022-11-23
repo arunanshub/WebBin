@@ -2,29 +2,36 @@
 
 <!doctype html>
 <html lang="en">
-    <head>
-        {% block head %}
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        {% block styles %}
-            <!-- Bootstrap CSS -->
-            {{ bootstrap.load_css() }}
-            {{ render_static("css", "styles.css") }}
-        {% endblock %}
+<head>
+    {% block head %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Your page title</title>
-        {% endblock %}
-    </head>
-    <body>
-        {% block scripts %}
-            <!-- Optional JavaScript -->
-            {{ bootstrap.load_js(nonce=csp_nonce()) }}
-            {{ render_static("js", "index.js") }}
-        {% endblock %}
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+    {{ render_static("css", "styles.css") }}
+    {% endblock %}
 
-        <!-- Your page content -->
-        {% block content %}{% endblock %}
-    </body>
+    <title>WebBin: The Based Pastebin</title>
+    {% endblock %}
+</head>
+
+<body>
+    {% block scripts %}
+    <!-- Optional JavaScript -->
+    {{ bootstrap.load_js(nonce=csp_nonce()) }}
+    {% endblock %}
+
+    <div class="p-5 bg-primary text-white text-center">
+        <h1>WebBin: The Based Pastebin</h1>
+        <p>Store your shitty little secrets here!</p>
+    </div>
+
+    <!-- Your page content -->
+    {% block content %}{% endblock %}
+</body>
+
 </html>
