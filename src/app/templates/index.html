@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap5/form.html" as wtf %}
+
+{% block content %}
+<div class="container-sm position-relative position-absolute top-50 start-50 translate-middle">
+    {{ render_messages(dismissible=True, dismiss_animate=True) }}
+    <div class="row">
+        <div class="col">
+            {{ wtf.render_form(form, form_type="horizontal") }}
+        </div>
+    </div>
+
+    {% if session["show_copy_button"] %}
+    <div class="row">
+        <div class="col">
+            {{ url_for(".reveal_secret", paste_id=session["paste_id"], _external=True) }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
