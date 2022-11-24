@@ -1,8 +1,17 @@
 from __future__ import annotations
 
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, TextAreaField
+from wtforms import (
+    Field,
+    PasswordField,
+    StringField,
+    SubmitField,
+    TextAreaField,
+    ValidationError,
+)
 from wtforms.validators import DataRequired, Length, Regexp
+
+from app.models import Secret
 
 
 class DataForm(FlaskForm):
@@ -14,7 +23,7 @@ class DataForm(FlaskForm):
     )
     password = PasswordField(
         "Password",
-        validators=[DataRequired()],
+        validators=[DataRequired(), Length(min=3)],
         description="Password to protect your retarded secrets.",
     )
     paste_id = StringField(
@@ -31,6 +40,10 @@ class DataForm(FlaskForm):
         "custom slug.",
     )
     submit = SubmitField("Hide!")
+
+    def validate_paste_id(self, field: Field) -> None:
+        if Secret.query.filter_by(paste_id=field.data).first():
+            raise ValidationError("The Paste ID is already in use.")
 
 
 class RevealForm(FlaskForm):
