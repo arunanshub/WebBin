@@ -499,7 +499,7 @@ pycryptodomex = "^3.9.8"
 type = "git"
 url = "https://github.com/arunanshub/pyflocker.git"
 reference = "HEAD"
-resolved_reference = "b798597c6d186205a48be90e7dcc22f8e023ea84"
+resolved_reference = "ee14a3d1abe9091837984ce480c8edc7e72eb4f6"
 
 [[package]]
 name = "pygments"
