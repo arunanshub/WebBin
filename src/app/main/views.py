@@ -37,6 +37,7 @@ def index() -> Any:
         )
         db.session.add(secret)
         db.session.commit()
+
         flash("Your secret has been stored!")
 
         return redirect(url_for(".ask_password", paste_id=paste_id))
@@ -96,4 +97,4 @@ def ask_password(paste_id: str) -> Any:
                 paste_id=paste_id,
             )
         )
-    return render_template("ask-password.html", form=form)
+    return render_template("ask-password.html", form=form, paste_id=paste_id)
