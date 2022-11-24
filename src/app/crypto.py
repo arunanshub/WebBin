@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from hashlib import pbkdf2_hmac
+from hashlib import scrypt
 
 from flask_migrate import os
 from pyflocker.ciphers import AES, base
@@ -19,17 +19,34 @@ class SecretData:
 ITERATION_COUNT = 260000
 
 
+def scrypt_derive_key(password: str, salt: bytes) -> bytes:
+    return scrypt(
+        password.encode(),
+        salt=salt,
+        n=2**16,
+        r=8,
+        p=1,
+        dklen=32,
+        maxmem=67111936,
+    )
+
+
 def encrypt_data(data: str, password: str) -> SecretData:
+    """
+    Encrypts the given ``data`` with the given ``password`` and returns a
+    packed version of ``data``.
+
+    Args:
+        data: A string value to be encrypted.
+        password: A string representing the password.
+
+    Returns:
+        The encrypted data with its cipher parameters in a packed form.
+    """
     # generate params for cipher
     nonce = os.urandom(16)
     salt = os.urandom(32)
-    key = pbkdf2_hmac(
-        "sha256",
-        password.encode(),
-        salt,
-        ITERATION_COUNT,
-        dklen=32,
-    )
+    key = scrypt_derive_key(password, salt)
     # use AES cipher to encrypt data
     cipher = AES.new(True, key, AES.MODE_GCM, nonce)
     assert isinstance(cipher, base.BaseAEADCipher)
@@ -49,13 +66,7 @@ def decrypt_data(payload: SecretData, password: str) -> str:
     salt = payload.salt
     tag = payload.token
     # generate the key from the password
-    key = pbkdf2_hmac(
-        "sha256",
-        password.encode(),
-        salt,
-        ITERATION_COUNT,
-        dklen=32,
-    )
+    key = scrypt_derive_key(password, salt)
     # decrypt the data
     cipher = AES.new(False, key, AES.MODE_GCM, nonce)
     assert isinstance(cipher, base.BaseAEADCipher)
