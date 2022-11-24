@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_minify import Minify
 from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import CONFIG
 
@@ -15,7 +16,7 @@ minify = Minify()
 migrate = Migrate()
 
 csp = {
-    "script-src": ["'self'", "cdn.jsdelivr.net"],
+    "script-src": ["'self'"],
     "style-src": ["'self'", "cdn.jsdelivr.net"],
 }
 
@@ -35,7 +36,8 @@ def config_app(config_name: str) -> Flask:
     db.init_app(app)
     bootstrap.init_app(app)
     migrate.init_app(app, db)
-    # minify.init_app(app)
+    if app.config["ENV"] == "production":
+        minify.init_app(app)
 
     # register CSP enforcer
     Talisman(
@@ -43,4 +45,6 @@ def config_app(config_name: str) -> Flask:
         content_security_policy=csp,
         content_security_policy_nonce_in=["script-src"],
     )
+    if app.config["SSL_REDIRECT"]:
+        app.wsgi_app = ProxyFix(app.wsgi_app)
     return app
