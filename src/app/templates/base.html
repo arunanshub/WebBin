@@ -9,10 +9,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block styles %}
     <!-- Bootstrap CSS -->
+    {% block styles %}
     {{ bootstrap.load_css() }}
     {{ render_static("css", "styles.css") }}
+    {{ render_static("icon", "favicon.ico") }}
     {% endblock %}
 
     <title>WebBin: The Based Pastebin</title>
@@ -20,17 +21,21 @@
 </head>
 
 <body>
-    {% block scripts %}
     <!-- Optional JavaScript -->
+    {% block scripts %}
     {{ bootstrap.load_js(nonce=csp_nonce()) }}
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js" nonce="{{ csp_nonce() }}"></script>
     {% endblock %}
 
-    <div class="p-5 bg-primary text-white text-center">
-        <h1>WebBin: The Based Pastebin</h1>
-        <p>Store your shitty little secrets here!</p>
-    </div>
+    <!-- a big banner -->
+    <a href="{{ url_for(".index", _external=True) }}" class="text-decoration-none">
+        <div class="p-5 bg-primary text-white text-center">
+            <h1>WebBin: The Based Pastebin</h1>
+            <p>Store your shitty little secrets here!</p>
+        </div>
+    </a>
 
-    <!-- Your page content -->
+    <!-- page content -->
     {% block content %}{% endblock %}
 </body>
 
