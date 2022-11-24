@@ -16,9 +16,6 @@ class SecretData:
     token: bytes
 
 
-ITERATION_COUNT = 260000
-
-
 def scrypt_derive_key(password: str, salt: bytes) -> bytes:
     return scrypt(
         password.encode(),
