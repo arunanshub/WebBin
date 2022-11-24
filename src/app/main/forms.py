@@ -57,6 +57,6 @@ class AskPasswordForm(FlaskForm):
     password = PasswordField(
         "Password",
         description="This password decrypts the secret message",
-        validators=[DataRequired()],
+        validators=[DataRequired(), Length(min=3)],
     )
     submit = SubmitField("Unlock the secret!")
