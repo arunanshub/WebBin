@@ -13,6 +13,7 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(16).hex())
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEFAULT_PASTE_ID_NUM_BYTES = 6
+    SSL_REDIRECT = bool(os.environ.get("SSL_REDIRECT"))
 
     @staticmethod
     def init_app(_: Flask) -> None:
@@ -23,14 +24,14 @@ class DevelopmentConfig(Config):
     ENV = "development"
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DEV_DATABASE_URI", "sqlite:///" + os.path.join(basedir, "data-dev.db")
+        "DEV_DATABASE_URL", "sqlite:///" + os.path.join(basedir, "data-dev.db")
     )
 
 
 class ProductionConfig(Config):
     ENV = "production"
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DEV_DATABASE_URL"
+        "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "data.db")
 
 
