@@ -13,7 +13,7 @@ bootstrap = Bootstrap5()
 minify = Minify()
 
 CSP = {
-    "script-src": ["'self'"],
+    "script-src": ["'self'", "cdn.jsdelivr.net"],
     "style-src": ["'self'", "cdn.jsdelivr.net"],
 }
 
@@ -35,7 +35,6 @@ def config_app(config_name: str) -> Flask:
     Talisman(
         app,
         content_security_policy=CSP,
-        content_security_policy_nonce_in=["script-src"],
         # redirect https if we detect an SSL enabled server
         force_https=app.config["SSL_REDIRECT"],
     )
