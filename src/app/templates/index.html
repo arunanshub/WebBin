@@ -2,13 +2,14 @@
 {% import "bootstrap5/form.html" as wtf %}
 
 {% block main_content %}
-<div class="row">
+<div class="row mb-5">
     <div class="col">
         <form method="post">
             {{ form.csrf_token() }}
             {{ wtf.render_hidden_errors(form) }}
             {{ wtf.render_field(form.text, class="font-monospace") }}
-            {{ wtf.render_form_row([form.password, form.paste_id]) }}
+            {{ wtf.render_field(form.password) }}
+            {{ wtf.render_form_row([form.paste_id, form.expires_at]) }}
             {{ wtf.render_field(form.submit) }}
         </form>
     </div>
