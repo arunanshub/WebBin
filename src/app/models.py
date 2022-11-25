@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from . import db
@@ -15,4 +16,9 @@ class Secret(Model):
     nonce = db.Column(db.LargeBinary(16), nullable=False)
     salt = db.Column(db.LargeBinary(32), nullable=False)
     token = db.Column(db.LargeBinary(32), nullable=False)
-    expires_at = db.Column(db.DateTime(), nullable=False)
+    created_at = db.Column(
+        db.DateTime(),
+        nullable=False,
+        default=datetime.utcnow,
+    )
+    expires_after = db.Column(db.Interval(), nullable=False)
