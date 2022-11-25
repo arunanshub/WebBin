@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+from datetime import timedelta
+
 from flask_wtf import FlaskForm
 from wtforms import (
     Field,
     PasswordField,
+    SelectField,
     StringField,
     SubmitField,
     TextAreaField,
@@ -38,6 +41,17 @@ class DataForm(FlaskForm):
         ],
         description="Slug or ID for the data. Edit me if you want a "
         "custom slug.",
+    )
+    expires_at = SelectField(
+        "Expire the paste after",
+        choices=[
+            (timedelta(), "Burn After Read"),
+            (timedelta(hours=1), "1 hour"),
+            (timedelta(hours=2), "2 hours"),
+            (timedelta(days=1), "1 day"),
+            (timedelta(weeks=1), "1 week"),
+        ],
+        description="When should I remove the paste from the database?",
     )
     submit = SubmitField("Hide!")
 
