@@ -33,6 +33,13 @@ class ProductionConfig(Config):
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "data.db")
 
+    @classmethod
+    def init_app(cls, app: Flask) -> None:
+        # handle reverse proxy server headers
+        from werkzeug.middleware.proxy_fix import ProxyFix
+
+        app.wsgi_app = ProxyFix(app.wsgi_app)
+
 
 CONFIG = {
     "development": DevelopmentConfig,
