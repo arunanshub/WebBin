@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import OrderedDict
 from datetime import timedelta
 
 from flask_wtf import FlaskForm
@@ -24,11 +25,13 @@ class DataForm(FlaskForm):
         render_kw={"rows": 11},
         description="What secrets do you want to hide?",
     )
+
     password = PasswordField(
         "Password",
         validators=[DataRequired(), Length(min=3)],
         description="Password to protect your retarded secrets.",
     )
+
     paste_id = StringField(
         "Slug/Paste ID",
         validators=[
@@ -42,17 +45,22 @@ class DataForm(FlaskForm):
         description="Slug or ID for the data. Edit me if you want a "
         "custom slug.",
     )
-    expires_at = SelectField(
+
+    EXPIRES_AFTER = OrderedDict(
+        {
+            "Burn After Read": timedelta(),
+            "1 hour": timedelta(hours=1),
+            "2 hours": timedelta(hours=2),
+            "1 day": timedelta(days=1),
+            "1 week": timedelta(weeks=1),
+        }
+    )
+    expires_after = SelectField(
         "Expire the paste after",
-        choices=[
-            (timedelta(), "Burn After Read"),
-            (timedelta(hours=1), "1 hour"),
-            (timedelta(hours=2), "2 hours"),
-            (timedelta(days=1), "1 day"),
-            (timedelta(weeks=1), "1 week"),
-        ],
+        choices=list(EXPIRES_AFTER),
         description="When should I remove the paste from the database?",
     )
+
     submit = SubmitField("Hide!")
 
     def validate_paste_id(self, field: Field) -> None:
