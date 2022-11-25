@@ -10,8 +10,7 @@ Model: Any = db.Model
 
 class Secret(Model):
     __tablename__ = "secrets"
-    id = db.Column(db.Integer, primary_key=True)
-    paste_id = db.Column(db.String(32), unique=True, index=True)
+    id = db.Column(db.String(32), unique=True, index=True, primary_key=True)
     secret_data = db.Column(db.LargeBinary(), nullable=False)
     nonce = db.Column(db.LargeBinary(16), nullable=False)
     salt = db.Column(db.LargeBinary(32), nullable=False)
