@@ -16,6 +16,7 @@ flask-talisman = "^1.0.0"
 flask-minify = "^0.41"
 flask-migrate = "^4.0.0"
 pyflocker = {git = "https://github.com/arunanshub/pyflocker.git"}
+python-dotenv = "^0.21.0"
 
 [tool.poetry.group.dev.dependencies]
 flask-shell-ipython = "^0.4.1"
