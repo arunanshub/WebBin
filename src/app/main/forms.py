@@ -49,10 +49,14 @@ class DataForm(FlaskForm):
     EXPIRES_AFTER = OrderedDict(
         {
             "Burn After Read": timedelta(),
+            "10 minutes": timedelta(minutes=10),
             "1 hour": timedelta(hours=1),
-            "2 hours": timedelta(hours=2),
             "1 day": timedelta(days=1),
             "1 week": timedelta(weeks=1),
+            "2 weeks": timedelta(weeks=2),
+            "1 month": timedelta(days=30),
+            "6 months": timedelta(days=30 * 6),
+            "1 year": timedelta(days=365),
         }
     )
     expires_after = SelectField(
@@ -64,7 +68,7 @@ class DataForm(FlaskForm):
     submit = SubmitField("Hide!")
 
     def validate_paste_id(self, field: Field) -> None:
-        if Secret.query.filter_by(paste_id=field.data).first():
+        if Secret.query.filter_by(id=field.data).first():
             raise ValidationError("The Paste ID is already in use.")
 
 
