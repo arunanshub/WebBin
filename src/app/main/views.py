@@ -27,7 +27,7 @@ def index() -> Any:
         # add the data to the database
         db.session.add(
             Secret(
-                paste_id=paste_id,
+                id=paste_id,
                 secret_data=secret_data.secret_data,
                 nonce=secret_data.nonce,
                 token=secret_data.token,
@@ -54,9 +54,7 @@ def ask_password(paste_id: str) -> Any:
     displays it using another form.
     """
     # check if the paste exists in our database
-    db_secret: Secret = Secret.query.filter_by(
-        paste_id=paste_id
-    ).first_or_404()
+    db_secret: Secret = Secret.query.filter_by(id=paste_id).first_or_404()
 
     # check whether the requested paste has already expired
     if db_secret.expires_after and (
