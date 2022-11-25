@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import secrets
+from datetime import datetime
 from typing import Any
 
-from flask import current_app, flash, redirect, render_template, url_for
+from flask import abort, current_app, flash, redirect, render_template, url_for
 
 from .. import db
 from ..crypto import SecretData, decrypt_data, encrypt_data
@@ -20,6 +21,9 @@ def index() -> Any:
         paste_id = form.paste_id.data
         # encrypt the user's secret data
         secret_data = encrypt_data(form.text.data, form.password.data)
+        # get expires at value
+        assert form.expires_after.data is not None
+        expires_after = form.EXPIRES_AFTER[form.expires_after.data]
         # add the data to the database
         db.session.add(
             Secret(
@@ -28,6 +32,7 @@ def index() -> Any:
                 nonce=secret_data.nonce,
                 token=secret_data.token,
                 salt=secret_data.salt,
+                expires_after=expires_after,
             )
         )
         db.session.commit()
@@ -53,6 +58,14 @@ def ask_password(paste_id: str) -> Any:
         paste_id=paste_id
     ).first_or_404()
 
+    # check whether the requested paste has already expired
+    if db_secret.expires_after and (
+        datetime.utcnow() > db_secret.created_at + db_secret.expires_after
+    ):
+        db.session.delete(db_secret)
+        db.session.commit()
+        abort(404)
+
     # first ask for password
     ask_password_form = AskPasswordForm()
     if ask_password_form.validate_on_submit():
@@ -72,9 +85,10 @@ def ask_password(paste_id: str) -> Any:
             flash("Decryption failed! Incorrect password.", category="error")
             return redirect(url_for(".ask_password", paste_id=paste_id))
 
-        # delete the paste since decryption is successful
-        db.session.delete(db_secret)
-        db.session.commit()
+        # a burn after read paste: delete immediately
+        if not db_secret.expires_after:
+            db.session.delete(db_secret)
+            db.session.commit()
 
         # build the reveal form and display the decrypted data
         reveal_form = RevealForm()
