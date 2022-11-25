@@ -23,8 +23,7 @@
 <body>
     <!-- Optional JavaScript -->
     {% block scripts %}
-    {{ bootstrap.load_js(nonce=csp_nonce()) }}
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js" nonce="{{ csp_nonce() }}"></script>
+    {{ bootstrap.load_js() }}
     {% endblock %}
 
     <!-- a big banner -->
