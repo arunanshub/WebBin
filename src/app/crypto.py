@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import zlib
 from dataclasses import dataclass
 from hashlib import scrypt
 
@@ -8,19 +9,24 @@ from pyflocker.ciphers import AES, base
 from pyflocker.ciphers.backends import exc
 
 
-@dataclass
+@dataclass(frozen=True)
 class EncryptedPaste:
     title: bytes
     data: bytes
     nonce: bytes
     salt: bytes
     token: bytes
+    is_compressed: bool
 
 
-@dataclass
+@dataclass(frozen=True)
 class RawPaste:
     title: str
     data: str
+
+
+#: Size of data after which it should be compressed.
+COMPRESSION_THRESHOLD_SIZE = 1 << 10
 
 
 def scrypt_derive_key(password: str, salt: bytes) -> bytes:
@@ -55,13 +61,27 @@ def encrypt_paste(raw_paste: RawPaste, password: str) -> EncryptedPaste:
     assert isinstance(cipher, base.BaseAEADCipher)
     # encrypt the title and data
     encrypted_title = cipher.update(raw_paste.title.encode())
-    secret_data = cipher.update(raw_paste.data.encode())
+    # compress data if it is >= 1KiB
+    is_compressed = False
+    encoded_raw_paste = raw_paste.data.encode()
+    if len(encoded_raw_paste) >= COMPRESSION_THRESHOLD_SIZE:
+        encoded_raw_paste = zlib.compress(encoded_raw_paste)
+        is_compressed = not is_compressed
+
+    secret_data = cipher.update(encoded_raw_paste)
     cipher.finalize()
     # the tag that will be used to authenticate decryption
     tag = cipher.calculate_tag()
     assert tag is not None
 
-    return EncryptedPaste(encrypted_title, secret_data, nonce, salt, tag)
+    return EncryptedPaste(
+        encrypted_title,
+        secret_data,
+        nonce,
+        salt,
+        tag,
+        is_compressed,
+    )
 
 
 def decrypt_paste(encrypted_paste: EncryptedPaste, password: str) -> RawPaste:
@@ -82,4 +102,7 @@ def decrypt_paste(encrypted_paste: EncryptedPaste, password: str) -> RawPaste:
         cipher.finalize(tag)
     except exc.DecryptionError:
         raise ValueError("Failed to decrypt data")
+    # decompress data if it has been compressed
+    if encrypted_paste.is_compressed:
+        paste = zlib.decompress(paste)
     return RawPaste(paste_title.decode(), paste.decode())

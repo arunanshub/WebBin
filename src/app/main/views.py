@@ -33,6 +33,7 @@ def index() -> Any:
                 id=paste_id,
                 title=secret_data.title,
                 data=secret_data.data,
+                is_compressed=secret_data.is_compressed,
                 nonce=secret_data.nonce,
                 token=secret_data.token,
                 salt=secret_data.salt,
@@ -78,6 +79,7 @@ def ask_password(paste_id: str) -> Any:
             db_secret.nonce,
             db_secret.salt,
             db_secret.token,
+            db_secret.is_compressed,
         )
         try:
             decrypted_paste = decrypt_paste(
