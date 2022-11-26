@@ -13,6 +13,7 @@ class Paste(Model):
     id = db.Column(db.String(32), unique=True, index=True, primary_key=True)
     title = db.Column(db.LargeBinary(100))
     data = db.Column(db.LargeBinary(), nullable=False)
+    is_compressed = db.Column(db.Boolean())
     nonce = db.Column(db.LargeBinary(16), nullable=False)
     salt = db.Column(db.LargeBinary(32), nullable=False)
     token = db.Column(db.LargeBinary(32), nullable=False)
