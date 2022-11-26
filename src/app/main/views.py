@@ -7,7 +7,7 @@ from typing import Any
 from flask import abort, current_app, flash, redirect, render_template, url_for
 
 from .. import db
-from ..crypto import SecretData, decrypt_data, encrypt_data
+from ..crypto import EncryptedPaste, RawPaste, decrypt_paste, encrypt_paste
 from ..models import Secret
 from . import main
 from .forms import AskPasswordForm, DataForm, RevealForm
@@ -20,7 +20,10 @@ def index() -> Any:
         # get the paste-id/slug
         paste_id = form.paste_id.data
         # encrypt the user's secret data
-        secret_data = encrypt_data(form.text.data, form.password.data)
+        secret_data = encrypt_paste(
+            RawPaste(form.paste_title.data, form.text.data),
+            form.password.data,
+        )
         # get expires at value
         assert form.expires_after.data is not None
         expires_after = form.EXPIRES_AFTER[form.expires_after.data]
@@ -28,6 +31,7 @@ def index() -> Any:
         db.session.add(
             Secret(
                 id=paste_id,
+                title=secret_data.title,
                 secret_data=secret_data.secret_data,
                 nonce=secret_data.nonce,
                 token=secret_data.token,
@@ -68,14 +72,15 @@ def ask_password(paste_id: str) -> Any:
     ask_password_form = AskPasswordForm()
     if ask_password_form.validate_on_submit():
         # build payload and try to decrypt the data
-        payload = SecretData(
+        payload = EncryptedPaste(
+            db_secret.title,
             db_secret.secret_data,
             db_secret.nonce,
             db_secret.salt,
             db_secret.token,
         )
         try:
-            decrypted_data = decrypt_data(
+            decrypted_data = decrypt_paste(
                 payload,
                 ask_password_form.password.data,
             )
@@ -90,7 +95,8 @@ def ask_password(paste_id: str) -> Any:
 
         # build the reveal form and display the decrypted data
         reveal_form = RevealForm()
-        reveal_form.text.data = decrypted_data
+        reveal_form.text.label.text = decrypted_data.title
+        reveal_form.text.data = decrypted_data.paste
         return render_template("reveal-secret.html", form=reveal_form)
 
     return render_template(
