@@ -32,7 +32,7 @@ def index() -> Any:
             Paste(
                 id=paste_id,
                 title=secret_data.title,
-                secret_data=secret_data.secret_data,
+                data=secret_data.secret_data,
                 nonce=secret_data.nonce,
                 token=secret_data.token,
                 salt=secret_data.salt,
@@ -74,13 +74,13 @@ def ask_password(paste_id: str) -> Any:
         # build payload and try to decrypt the data
         payload = EncryptedPaste(
             db_secret.title,
-            db_secret.secret_data,
+            db_secret.data,
             db_secret.nonce,
             db_secret.salt,
             db_secret.token,
         )
         try:
-            decrypted_data = decrypt_paste(
+            decrypted_paste = decrypt_paste(
                 payload,
                 ask_password_form.password.data,
             )
@@ -95,8 +95,8 @@ def ask_password(paste_id: str) -> Any:
 
         # build the reveal form and display the decrypted data
         reveal_form = RevealForm()
-        reveal_form.text.label.text = decrypted_data.title
-        reveal_form.text.data = decrypted_data.paste
+        reveal_form.text.label.text = decrypted_paste.title
+        reveal_form.text.data = decrypted_paste.paste
         return render_template("reveal-secret.html", form=reveal_form)
 
     return render_template(

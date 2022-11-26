@@ -12,7 +12,7 @@ class Paste(Model):
     __tablename__ = "pastes"
     id = db.Column(db.String(32), unique=True, index=True, primary_key=True)
     title = db.Column(db.LargeBinary(100))
-    secret_data = db.Column(db.LargeBinary(), nullable=False)
+    data = db.Column(db.LargeBinary(), nullable=False)
     nonce = db.Column(db.LargeBinary(16), nullable=False)
     salt = db.Column(db.LargeBinary(32), nullable=False)
     token = db.Column(db.LargeBinary(32), nullable=False)
