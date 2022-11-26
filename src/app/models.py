@@ -16,7 +16,7 @@ class Paste(Model):
     nonce = db.Column(db.LargeBinary(16), nullable=False)
     salt = db.Column(db.LargeBinary(32), nullable=False)
     token = db.Column(db.LargeBinary(32), nullable=False)
-    created_at = db.Column(
+    created_at: datetime = db.Column(
         db.DateTime(),
         nullable=False,
         default=datetime.utcnow,
