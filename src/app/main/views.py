@@ -90,6 +90,12 @@ def ask_password(paste_id: str) -> Any:
 
         # a burn after read paste: delete immediately
         if not db_secret.expires_after:
+            flash(
+                "Paste was created for your eyes only. When this paste is "
+                "closed there will be no way to recover or view it again!",
+                category="warning",
+            )
+
             db.session.delete(db_secret)
             db.session.commit()
 
@@ -97,7 +103,11 @@ def ask_password(paste_id: str) -> Any:
         reveal_form = RevealPasteForm()
         reveal_form.text.label.text = decrypted_paste.title
         reveal_form.text.data = decrypted_paste.data
-        return render_template("reveal-secret.html", form=reveal_form)
+        return render_template(
+            "reveal-secret.html",
+            form=reveal_form,
+            paste_created_at=db_secret.created_at.isoformat(),
+        )
 
     return render_template(
         "ask-password.html",
