@@ -11,7 +11,7 @@ from pyflocker.ciphers.backends import exc
 @dataclass
 class EncryptedPaste:
     title: bytes
-    secret_data: bytes
+    data: bytes
     nonce: bytes
     salt: bytes
     token: bytes
@@ -20,7 +20,7 @@ class EncryptedPaste:
 @dataclass
 class RawPaste:
     title: str
-    paste: str
+    data: str
 
 
 def scrypt_derive_key(password: str, salt: bytes) -> bytes:
@@ -55,7 +55,7 @@ def encrypt_paste(raw_paste: RawPaste, password: str) -> EncryptedPaste:
     assert isinstance(cipher, base.BaseAEADCipher)
     # encrypt the title and data
     encrypted_title = cipher.update(raw_paste.title.encode())
-    secret_data = cipher.update(raw_paste.paste.encode())
+    secret_data = cipher.update(raw_paste.data.encode())
     cipher.finalize()
     # the tag that will be used to authenticate decryption
     tag = cipher.calculate_tag()
@@ -66,7 +66,7 @@ def encrypt_paste(raw_paste: RawPaste, password: str) -> EncryptedPaste:
 
 def decrypt_paste(encrypted_paste: EncryptedPaste, password: str) -> RawPaste:
     # unpack the cipher parameters
-    encrypted_data = encrypted_paste.secret_data
+    encrypted_data = encrypted_paste.data
     nonce = encrypted_paste.nonce
     salt = encrypted_paste.salt
     tag = encrypted_paste.token

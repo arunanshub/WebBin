@@ -32,7 +32,7 @@ def index() -> Any:
             Paste(
                 id=paste_id,
                 title=secret_data.title,
-                data=secret_data.secret_data,
+                data=secret_data.data,
                 nonce=secret_data.nonce,
                 token=secret_data.token,
                 salt=secret_data.salt,
@@ -96,7 +96,7 @@ def ask_password(paste_id: str) -> Any:
         # build the reveal form and display the decrypted data
         reveal_form = RevealPasteForm()
         reveal_form.text.label.text = decrypted_paste.title
-        reveal_form.text.data = decrypted_paste.paste
+        reveal_form.text.data = decrypted_paste.data
         return render_template("reveal-secret.html", form=reveal_form)
 
     return render_template(
