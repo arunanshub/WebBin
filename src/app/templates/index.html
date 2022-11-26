@@ -8,8 +8,8 @@
             {{ form.csrf_token() }}
             {{ wtf.render_hidden_errors(form) }}
             {{ wtf.render_field(form.text, class="font-monospace") }}
-            {{ wtf.render_field(form.password) }}
-            {{ wtf.render_form_row([form.paste_id, form.expires_after]) }}
+            {{ wtf.render_form_row([form.password, form.paste_id]) }}
+            {{ wtf.render_form_row([form.paste_title, form.expires_after]) }}
             {{ wtf.render_field(form.submit) }}
         </form>
     </div>
