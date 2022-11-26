@@ -65,6 +65,12 @@ class DataForm(FlaskForm):
         description="When should I remove the paste from the database?",
     )
 
+    paste_title = StringField(
+        "Paste Title",
+        validators=[Length(max=100)],
+        description="The paste title that will be displayed over the data.",
+    )
+
     submit = SubmitField("Hide!")
 
     def validate_paste_id(self, field: Field) -> None:
