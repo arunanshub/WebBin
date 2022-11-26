@@ -8,7 +8,7 @@ from flask import abort, current_app, flash, redirect, render_template, url_for
 
 from .. import db
 from ..crypto import EncryptedPaste, RawPaste, decrypt_paste, encrypt_paste
-from ..models import Secret
+from ..models import Paste
 from . import main
 from .forms import AskPasswordForm, DataForm, RevealForm
 
@@ -29,7 +29,7 @@ def index() -> Any:
         expires_after = form.EXPIRES_AFTER[form.expires_after.data]
         # add the data to the database
         db.session.add(
-            Secret(
+            Paste(
                 id=paste_id,
                 title=secret_data.title,
                 secret_data=secret_data.secret_data,
@@ -58,7 +58,7 @@ def ask_password(paste_id: str) -> Any:
     displays it using another form.
     """
     # check if the paste exists in our database
-    db_secret: Secret = Secret.query.filter_by(id=paste_id).first_or_404()
+    db_secret: Paste = Paste.query.filter_by(id=paste_id).first_or_404()
 
     # check whether the requested paste has already expired
     if db_secret.expires_after and (

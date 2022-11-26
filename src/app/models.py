@@ -8,8 +8,8 @@ from . import db
 Model: Any = db.Model
 
 
-class Secret(Model):
-    __tablename__ = "secrets"
+class Paste(Model):
+    __tablename__ = "pastes"
     id = db.Column(db.String(32), unique=True, index=True, primary_key=True)
     title = db.Column(db.LargeBinary(100))
     secret_data = db.Column(db.LargeBinary(), nullable=False)

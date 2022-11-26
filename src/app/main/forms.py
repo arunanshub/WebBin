@@ -15,7 +15,7 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, Length, Regexp
 
-from app.models import Secret
+from app.models import Paste
 
 
 class DataForm(FlaskForm):
@@ -74,7 +74,7 @@ class DataForm(FlaskForm):
     submit = SubmitField("Hide!")
 
     def validate_paste_id(self, field: Field) -> None:
-        if Secret.query.filter_by(id=field.data).first():
+        if Paste.query.filter_by(id=field.data).first():
             raise ValidationError("The Paste ID is already in use.")
 
 
