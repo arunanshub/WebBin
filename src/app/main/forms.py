@@ -18,7 +18,7 @@ from wtforms.validators import DataRequired, Length, Regexp
 from app.models import Paste
 
 
-class DataForm(FlaskForm):
+class AcceptPasteForm(FlaskForm):
     text = TextAreaField(
         "Data To Hide",
         validators=[DataRequired()],
@@ -78,7 +78,7 @@ class DataForm(FlaskForm):
             raise ValidationError("The Paste ID is already in use.")
 
 
-class RevealForm(FlaskForm):
+class RevealPasteForm(FlaskForm):
     text = TextAreaField(
         "Secret message",
         render_kw={"readonly": True, "rows": 11},

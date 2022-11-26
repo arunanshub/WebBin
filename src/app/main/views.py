@@ -10,12 +10,12 @@ from .. import db
 from ..crypto import EncryptedPaste, RawPaste, decrypt_paste, encrypt_paste
 from ..models import Paste
 from . import main
-from .forms import AskPasswordForm, DataForm, RevealForm
+from .forms import AcceptPasteForm, AskPasswordForm, RevealPasteForm
 
 
 @main.route("/", methods=["GET", "POST"])
 def index() -> Any:
-    form = DataForm()
+    form = AcceptPasteForm()
     if form.validate_on_submit():
         # get the paste-id/slug
         paste_id = form.paste_id.data
@@ -94,7 +94,7 @@ def ask_password(paste_id: str) -> Any:
             db.session.commit()
 
         # build the reveal form and display the decrypted data
-        reveal_form = RevealForm()
+        reveal_form = RevealPasteForm()
         reveal_form.text.label.text = decrypted_paste.title
         reveal_form.text.data = decrypted_paste.paste
         return render_template("reveal-secret.html", form=reveal_form)
