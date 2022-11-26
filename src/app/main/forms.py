@@ -79,10 +79,7 @@ class AcceptPasteForm(FlaskForm):
 
 
 class RevealPasteForm(FlaskForm):
-    text = TextAreaField(
-        "Secret message",
-        render_kw={"readonly": True, "rows": 11},
-    )
+    text = TextAreaField("", render_kw={"readonly": True, "rows": 11})
 
 
 class AskPasswordForm(FlaskForm):

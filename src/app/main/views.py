@@ -101,11 +101,11 @@ def ask_password(paste_id: str) -> Any:
 
         # build the reveal form and display the decrypted data
         reveal_form = RevealPasteForm()
-        reveal_form.text.label.text = decrypted_paste.title
         reveal_form.text.data = decrypted_paste.data
         return render_template(
             "reveal-secret.html",
             form=reveal_form,
+            paste_title=decrypted_paste.title,
             paste_created_at=db_secret.created_at.isoformat(),
         )
 
