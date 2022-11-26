@@ -107,7 +107,7 @@ def ask_password(paste_id: str) -> Any:
         return render_template(
             "reveal-secret.html",
             form=reveal_form,
-            paste_title=decrypted_paste.title,
+            paste_title=decrypted_paste.title or "Untitled",
             paste_created_at=db_secret.created_at.isoformat(),
         )
 
