@@ -17,4 +17,7 @@ Migrate(app, db)
 
 @app.cli.command()
 def deploy() -> None:
+    """
+    Prepare the application for deployment.
+    """
     upgrade()
