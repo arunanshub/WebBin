@@ -10,7 +10,7 @@
             {{ wtf.render_field(form.text, class="font-monospace") }}
             {{ wtf.render_form_row([form.password, form.paste_id]) }}
             {{ wtf.render_form_row([form.paste_title, form.expires_after]) }}
-            {{ wtf.render_field(form.submit) }}
+            {{ wtf.render_field(form.submit, button_size="lg") }}
         </form>
     </div>
 </div>
