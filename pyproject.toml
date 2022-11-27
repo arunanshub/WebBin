@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "app"
+name = "WebBin"
 version = "0.1.0"
-description = ""
+description = "The Based Pastebin"
 authors = ["Arunanshu Biswas <mydellpc07@gmail.com>"]
 readme = "README.md"
+packages = [{ include = "app", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
