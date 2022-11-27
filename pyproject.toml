@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "WebBin"
 version = "0.1.0"
+license = "GPL-3.0-or-later"
 description = "The Based Pastebin"
 authors = ["Arunanshu Biswas <mydellpc07@gmail.com>"]
 readme = "README.md"
