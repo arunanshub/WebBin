@@ -16,7 +16,12 @@
     {{ render_static("icon", "favicon.ico") }}
     {% endblock %}
 
-    <title>WebBin: The Based Pastebin</title>
+    <title>
+        {% block title %}
+        WebBin: The Based Pastebin
+        {% endblock %}
+    </title>
+
     {% endblock %}
 </head>
 
@@ -29,8 +34,11 @@
     <!-- a big banner -->
     <a href="{{ url_for("main.index", _external=True) }}" class="text-decoration-none">
         <div class="p-4 bg-primary text-white text-center">
-            <h1>WebBin: The Based Pastebin</h1>
-            <p>Store your shitty little secrets here!</p>
+            <h1 class="display-5 fw-bold">WebBin: The Based Pastebin</h1>
+
+            <p class="lead mb-4">
+            Store your shitty secrets here.
+            </p>
         </div>
     </a>
 
