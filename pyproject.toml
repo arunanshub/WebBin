@@ -23,6 +23,12 @@ python-dotenv = "^0.21.0"
 [tool.poetry.group.dev.dependencies]
 flask-shell-ipython = "^0.4.1"
 
+[tool.poetry.group.tests.dependencies]
+hypothesis = "^6.58.1"
+pytest = "^7.2.0"
+pytest-randomly = "^3.12.0"
+pytest-xdist = "^3.0.2"
+
 [tool.pycln]
 all = true
 
