@@ -53,7 +53,7 @@ def encrypt_paste(raw_paste: RawPaste, password: str) -> EncryptedPaste:
         The encrypted data with its cipher parameters in a packed form.
     """
     # generate params for cipher
-    nonce = os.urandom(16)
+    nonce = os.urandom(12)
     salt = os.urandom(32)
     key = scrypt_derive_key(password, salt)
     # use AES cipher to encrypt data
