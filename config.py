@@ -12,6 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(16).hex())
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    #: No. of bytes to use to create a paste ID
     DEFAULT_PASTE_ID_NUM_BYTES = 6
     SSL_REDIRECT = bool(os.environ.get("SSL_REDIRECT"))
 
@@ -21,7 +22,6 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    DEBUG = True
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DEV_DATABASE_URL", "sqlite:///" + os.path.join(basedir, "data-dev.db")
@@ -29,6 +29,8 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
+    DEBUG = True
+    TESTING = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "data.db")
