@@ -1,5 +1,7 @@
 # WebBin: The Based Pastebin
 
+[![CI](https://github.com/arunanshub/WebBin/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/WebBin/actions/workflows/ci.yml)
+
 ![Website Image](static/website.png)
 
 ## Features
