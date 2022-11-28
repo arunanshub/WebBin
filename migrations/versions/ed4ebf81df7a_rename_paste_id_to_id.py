@@ -22,7 +22,7 @@ def upgrade():
     with op.batch_alter_table("secrets", schema=None) as batch_op:
         batch_op.alter_column(
             "id",
-            existing_type=sa.INTEGER(),
+            existing_type=sa.Integer(),
             type_=sa.String(length=32),
             existing_nullable=False,
         )
@@ -46,8 +46,9 @@ def downgrade():
         batch_op.alter_column(
             "id",
             existing_type=sa.String(length=32),
-            type_=sa.INTEGER(),
+            type_=sa.Integer(),
             existing_nullable=False,
+            postgresql_using="id::integer",
         )
 
     # ### end Alembic commands ###
