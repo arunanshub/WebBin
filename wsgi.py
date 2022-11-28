@@ -3,13 +3,14 @@ from __future__ import annotations
 import os
 
 from dotenv import load_dotenv
-from flask_migrate import Migrate, upgrade
-
-from app import config_app, db
 
 dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
+
+from flask_migrate import Migrate, upgrade  # noqa: E402
+
+from app import config_app, db  # noqa: E402
 
 app = config_app(os.environ.get("FLASK_CONFIG", "development"))
 Migrate(app, db)
