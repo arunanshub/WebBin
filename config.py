@@ -15,6 +15,9 @@ class Config:
     #: No. of bytes to use to create a paste ID
     DEFAULT_PASTE_ID_NUM_BYTES = 6
     SSL_REDIRECT = bool(os.environ.get("SSL_REDIRECT"))
+    COMPRESSION_THRESHOLD_SIZE = int(
+        os.getenv("COMPRESSION_THRESHOLD_SIZE", 1 << 10)
+    )
 
     @staticmethod
     def init_app(_: Flask) -> None:
@@ -23,7 +26,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
+    SQLALCHEMY_DATABASE_URI = os.getenv(
         "DEV_DATABASE_URL", "sqlite:///" + os.path.join(basedir, "data-dev.db")
     )
 
@@ -31,9 +34,10 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     DEBUG = True
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL"
-    ) or "sqlite:///" + os.path.join(basedir, "data.db")
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL",
+        "sqlite:///" + os.path.join(basedir, "data.db"),
+    )
 
     @classmethod
     def init_app(cls, app: Flask) -> None:

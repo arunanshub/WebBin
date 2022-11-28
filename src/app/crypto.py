@@ -41,17 +41,30 @@ def scrypt_derive_key(password: str, salt: bytes) -> bytes:
     )
 
 
-def encrypt_paste(raw_paste: RawPaste, password: str) -> EncryptedPaste:
+def encrypt_paste(
+    raw_paste: RawPaste,
+    password: str,
+    compression_threshold_size: int | None = None,
+) -> EncryptedPaste:
     """
     Encrypts the given paste with the given ``password`` and returns a
     packed version of ``data``.
 
     Args:
         raw_paste: The raw paste data.
+        password: A string that encrypts paste data and title.
+        compression_threshold_size:
+            If the paste data size is greater than the threshold, it will be
+            compressed with ``zlib`` algorithm.
 
     Returns:
         The encrypted data with its cipher parameters in a packed form.
     """
+    compression_threshold_size = (
+        COMPRESSION_THRESHOLD_SIZE
+        if compression_threshold_size is None
+        else compression_threshold_size
+    )
     # generate params for cipher
     nonce = os.urandom(12)
     salt = os.urandom(32)
@@ -64,7 +77,7 @@ def encrypt_paste(raw_paste: RawPaste, password: str) -> EncryptedPaste:
     # compress data if it is >= 1KiB
     is_compressed = False
     encoded_raw_paste = raw_paste.data.encode()
-    if len(encoded_raw_paste) >= COMPRESSION_THRESHOLD_SIZE:
+    if len(encoded_raw_paste) >= compression_threshold_size:
         encoded_raw_paste = zlib.compress(encoded_raw_paste)
         is_compressed = not is_compressed
 

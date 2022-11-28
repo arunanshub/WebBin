@@ -13,17 +13,22 @@ from . import main
 from .forms import AcceptPasteForm, AskPasswordForm, RevealPasteForm
 
 
+def _encrypt_data_from_form(form: AcceptPasteForm) -> EncryptedPaste:
+    return encrypt_paste(
+        RawPaste(form.paste_title.data, form.text.data),
+        form.password.data,
+        current_app.config.get("COMPRESSION_THRESHOLD_SIZE"),
+    )
+
+
 @main.route("/", methods=["GET", "POST"])
 def index() -> Any:
     form = AcceptPasteForm()
     if form.validate_on_submit():
         # get the paste-id/slug
         paste_id = form.paste_id.data
-        # encrypt the user's secret data
-        secret_data = encrypt_paste(
-            RawPaste(form.paste_title.data, form.text.data),
-            form.password.data,
-        )
+        # encrypt the data recieved from form
+        secret_data = _encrypt_data_from_form(form)
         # get expires at value
         assert form.expires_after.data is not None
         expires_after = form.EXPIRES_AFTER[form.expires_after.data]
