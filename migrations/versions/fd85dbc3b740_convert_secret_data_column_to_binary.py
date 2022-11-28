@@ -33,7 +33,7 @@ def downgrade():
     with op.batch_alter_table("secrets", schema=None) as batch_op:
         batch_op.drop_column("secret_data")
         batch_op.add_column(
-            sa.Column("secret_data", sa.TEXT(), nullable=False)
+            sa.Column("secret_data", sa.Text(), nullable=False)
         )
 
     # ### end Alembic commands ###
