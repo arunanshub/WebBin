@@ -13,7 +13,7 @@
 - `zlib` compression of data
 - Custom expiration time of pastes, including "burn after read"
 - Paste titles and custom paste slugs
-- Support for all major SQL databases thanks to [SQLALchemy](https://github.com/sqlalchemy/sqlalchemy)
+- Support for all major SQL databases thanks to [SQLALchemy][sqlalchemy]
 - Schema protection using database migration scripts
 - Website security using strict CSP policy and CSRF tokens
 - support for running WebBin behind a proxy server (see [`config.py`](./config.py))
@@ -25,6 +25,24 @@ Install WebBin using [Poetry](https://python-poetry.org/):
 ```shell
 poetry install
 ```
+
+Optionally, install Postgres drivers using:
+
+```shell
+poetry install -E postgres
+```
+
+> I would recommend installing Poetry using [`pipx`](https://pypa.github.io/pipx/).
+
+### Installing Database Drivers
+
+To communicate with a database, you would need a database connector. WebBin by
+default provides dependencies for SQLite and Postgres. However, you may install
+the [connectors supported by SQLALchemy.][sqlalchemy_dialects]
+
+### Why Postgres?
+
+Because I like it.
 
 ## Running
 
@@ -48,7 +66,7 @@ Can be a possible configuration for production environment. See
 Run the following command to automatically migrate your database:
 
 ```bash
-flask deploy
+poetry run flask deploy
 ```
 
 This command will not only apply migrations to your database, but also prepare
@@ -56,16 +74,18 @@ WebBin for deployment.
 
 ### Running and Deployment
 
+Gunicorn is used by default.
+
 Run WebBin using [Gunicorn][gunicorn]:
 
 ```bash
-gunicorn wsgi:app -w 4
+poetry run gunicorn wsgi:app -w 4
 ```
 
 Or if you want a development web server:
 
 ```bash
-flask -A wsgi:app
+poetry run flask -A wsgi:app
 ```
 
 ## Configuration
@@ -76,9 +96,21 @@ flask -A wsgi:app
 - `FLASK_CONFIG`: Configure whether you want run WebBin in a development
     environment or a production environment. Can be either `production` or
     `development`.
-- `SSL_REDIRECT`: Enable `http` to `https` redirects. (Default `False`)
+
+- `SSL_REDIRECT`: Enable `http` to `https` redirects. Enable this only if
+  WebBin is running behind a proxy server (Default `False`)
+
 - `DATABASE_URL`: The URL to your database. If not provided, an SQLite database
-  is used. I recommend using PostgreSQL database for production. (Defualt
+  is used. I recommend using Postgres database for production. (Defualt
   `data.db` or `data-dev.db` depending on `FLASK_CONFIG`).
 
+  > **Note**
+  > For Postgres database URL, The scheme should be `postgresql` instead of
+  > `postgres`.
+
+- `COMPRESSION_THRESHOLD_SIZE`: If the paste data size is greater than the
+  threshold, it will be compressed with ``zlib`` algorithm.
+
 [gunicorn]: <http://gunicorn.com>
+[sqlalchemy]: <https://docs.sqlalchemy.org/>
+[sqlalchemy_dialects]: <https://docs.sqlalchemy.org/en/20/dialects/>
