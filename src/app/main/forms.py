@@ -38,8 +38,8 @@ class AcceptPasteForm(FlaskForm):
             Length(min=1, max=32),
             DataRequired(),
             Regexp(
-                r"^\S+$",
-                message="No whitespace allowed in slug!",
+                r"^[a-zA-Z0-9]$",
+                message="No whitespace or special characters allowed in slug!",
             ),
         ],
         description="Slug or ID for the data. Edit me if you want a "
