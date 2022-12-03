@@ -83,6 +83,12 @@ Run WebBin using [Gunicorn][gunicorn]:
 poetry run gunicorn wsgi:app -w 4
 ```
 
+Or if you are on Windows, use [Waitress][waitress]:
+
+```bash
+poetry run waitress-serve wsgi:app
+```
+
 Or if you want a development web server:
 
 ```bash
@@ -115,3 +121,4 @@ poetry run flask -A wsgi:app
 [gunicorn]: <http://gunicorn.com>
 [sqlalchemy]: <https://docs.sqlalchemy.org/>
 [sqlalchemy_dialects]: <https://docs.sqlalchemy.org/en/20/dialects/>
+[waitress]: <https://docs.pylonsproject.org/projects/waitress/en/latest/>
