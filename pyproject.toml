@@ -12,7 +12,7 @@ python = ">=3.8,<4.0"
 flask = "^2.2.2"
 flask-wtf = "^1.0.1"
 flask-sqlalchemy = "^3.0.2"
-gunicorn = "^20.1.0"
+gunicorn = {version = "^20.1.0", markers = "sys_platform != 'win32'"}
 bootstrap-flask = "^2.2.0"
 flask-talisman = "^1.0.0"
 flask-minify = "^0.41"
@@ -20,6 +20,7 @@ flask-migrate = "^4.0.0"
 pyflocker = {git = "https://github.com/arunanshub/pyflocker.git"}
 python-dotenv = "^0.21.0"
 psycopg2-binary = {version = "^2.9.5", optional = true}
+waitress = {version = "^2.1.2", markers = "sys_platform == 'win32'"}
 
 [tool.poetry.extras]
 postgres = ["psycopg2-binary"]

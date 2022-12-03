@@ -25,7 +25,7 @@ python-versions = "*"
 
 [[package]]
 name = "asttokens"
-version = "2.1.0"
+version = "2.2.0"
 description = "Annotate AST trees with source code positions"
 category = "dev"
 optional = false
@@ -35,7 +35,7 @@ python-versions = "*"
 six = "*"
 
 [package.extras]
-test = ["astroid (<=2.5.3)", "pytest"]
+test = ["astroid", "pytest"]
 
 [[package]]
 name = "attrs"
@@ -325,7 +325,7 @@ python-versions = "*"
 
 [[package]]
 name = "hypothesis"
-version = "6.58.1"
+version = "6.59.0"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
@@ -651,7 +651,7 @@ pycryptodomex = "^3.9.8"
 type = "git"
 url = "https://github.com/arunanshub/pyflocker.git"
 reference = "HEAD"
-resolved_reference = "44e36cea57ecfd28d625d4b903d1e35a3959165a"
+resolved_reference = "898a29982534dd0fe448d81415781d6a53653067"
 
 [[package]]
 name = "pygments"
@@ -845,8 +845,8 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "traitlets"
-version = "5.5.0"
-description = ""
+version = "5.6.0"
+description = "Traitlets Python configuration system"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
@@ -854,6 +854,18 @@ python-versions = ">=3.7"
 [package.extras]
 docs = ["myst-parser", "pydata-sphinx-theme", "sphinx"]
 test = ["pre-commit", "pytest"]
+
+[[package]]
+name = "waitress"
+version = "2.1.2"
+description = "Waitress WSGI server"
+category = "main"
+optional = false
+python-versions = ">=3.7.0"
+
+[package.extras]
+docs = ["Sphinx (>=1.8.1)", "docutils", "pylons-sphinx-themes (>=1.0.9)"]
+testing = ["coverage (>=5.0)", "pytest", "pytest-cover"]
 
 [[package]]
 name = "wcwidth"
@@ -917,7 +929,7 @@ postgres = ["psycopg2-binary"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "cd1507e6c2a004bd231580c080d47dccf02f9a26c3774094faeea18caae2c750"
+content-hash = "47f9194a8268f358f6051ba16f3bfa62ba1a301f6876bbca828ff6db88a655ed"
 
 [metadata.files]
 alembic = [
@@ -929,8 +941,8 @@ appnope = [
     {file = "appnope-0.1.3.tar.gz", hash = "sha256:02bd91c4de869fbb1e1c50aafc4098827a7a54ab2f39d9dcba6c9547ed920e24"},
 ]
 asttokens = [
-    {file = "asttokens-2.1.0-py2.py3-none-any.whl", hash = "sha256:1b28ed85e254b724439afc783d4bee767f780b936c3fe8b3275332f42cf5f561"},
-    {file = "asttokens-2.1.0.tar.gz", hash = "sha256:4aa76401a151c8cc572d906aad7aea2a841780834a19d780f4321c0fe1b54635"},
+    {file = "asttokens-2.2.0-py2.py3-none-any.whl", hash = "sha256:c56caef774a929923696f09ceea0eadcb95c94b30e8ee4f9fc4f5867096caaeb"},
+    {file = "asttokens-2.2.0.tar.gz", hash = "sha256:e27b1f115daebfafd4d1826fc75f9a72f0b74bd3ae4ee4d9380406d74d35e52c"},
 ]
 attrs = [
     {file = "attrs-22.1.0-py2.py3-none-any.whl", hash = "sha256:86efa402f67bf2df34f51a335487cf46b1ec130d02b8d39fd248abfd30da551c"},
@@ -1235,8 +1247,8 @@ htmlmin = [
     {file = "htmlmin-0.1.12.tar.gz", hash = "sha256:50c1ef4630374a5d723900096a961cff426dff46b48f34d194a81bbe14eca178"},
 ]
 hypothesis = [
-    {file = "hypothesis-6.58.1-py3-none-any.whl", hash = "sha256:8738b9b38c2b2c214d965b07f29312047b970541d848cb97d2a58f79fd61fbe6"},
-    {file = "hypothesis-6.58.1.tar.gz", hash = "sha256:b5747497b2b352335e4dc51f1b113cfc90c49ffd174f2036f173edf8799e123a"},
+    {file = "hypothesis-6.59.0-py3-none-any.whl", hash = "sha256:4eb2875097a07553a1006cb2b96fab21682e4359b138b2ae3c5f5d8b3f5a8bf1"},
+    {file = "hypothesis-6.59.0.tar.gz", hash = "sha256:af05e24b123c9413b8752bbf822105dbb112f56456fb240723d7f410eebf78bb"},
 ]
 importlib-metadata = [
     {file = "importlib_metadata-5.1.0-py3-none-any.whl", hash = "sha256:d84d17e21670ec07990e1044a99efe8d615d860fd176fc29ef5c306068fda313"},
@@ -1582,8 +1594,12 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 traitlets = [
-    {file = "traitlets-5.5.0-py3-none-any.whl", hash = "sha256:1201b2c9f76097195989cdf7f65db9897593b0dfd69e4ac96016661bb6f0d30f"},
-    {file = "traitlets-5.5.0.tar.gz", hash = "sha256:b122f9ff2f2f6c1709dab289a05555be011c87828e911c0cf4074b85cb780a79"},
+    {file = "traitlets-5.6.0-py3-none-any.whl", hash = "sha256:1410755385d778aed847d68deb99b3ba30fbbf489e17a1e8cbb753060d5cce73"},
+    {file = "traitlets-5.6.0.tar.gz", hash = "sha256:10b6ed1c9cedee83e795db70a8b9c2db157bb3778ec4587a349ecb7ef3b1033b"},
+]
+waitress = [
+    {file = "waitress-2.1.2-py3-none-any.whl", hash = "sha256:7500c9625927c8ec60f54377d590f67b30c8e70ef4b8894214ac6e4cad233d2a"},
+    {file = "waitress-2.1.2.tar.gz", hash = "sha256:780a4082c5fbc0fde6a2fcfe5e26e6efc1e8f425730863c04085769781f51eba"},
 ]
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
