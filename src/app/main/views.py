@@ -7,15 +7,14 @@ from typing import Any
 from flask import abort, current_app, flash, redirect, render_template, url_for
 
 from .. import db
-from ..crypto import EncryptedPaste, RawPaste, decrypt_paste, encrypt_paste
+from ..crypto import EncryptedPaste, RawPaste
 from ..models import Paste
 from . import main
 from .forms import AcceptPasteForm, AskPasswordForm, RevealPasteForm
 
 
 def _encrypt_data_from_form(form: AcceptPasteForm) -> EncryptedPaste:
-    return encrypt_paste(
-        RawPaste(form.paste_title.data, form.text.data),
+    return RawPaste(form.paste_title.data, form.text.data).encrypt(
         form.password.data,
         current_app.config.get("COMPRESSION_THRESHOLD_SIZE"),
     )
@@ -87,8 +86,7 @@ def ask_password(paste_id: str) -> Any:
             db_secret.is_compressed,
         )
         try:
-            decrypted_paste = decrypt_paste(
-                payload,
+            decrypted_paste = payload.decrypt(
                 ask_password_form.password.data,
             )
         except ValueError:
