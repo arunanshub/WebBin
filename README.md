@@ -118,7 +118,7 @@ poetry run flask -A wsgi:app
 - `COMPRESSION_THRESHOLD_SIZE`: If the paste data size is greater than the
   threshold, it will be compressed with ``zlib`` algorithm.
 
-[gunicorn]: <http://gunicorn.com>
+[gunicorn]: <https://gunicorn.org>
 [sqlalchemy]: <https://docs.sqlalchemy.org/>
 [sqlalchemy_dialects]: <https://docs.sqlalchemy.org/en/20/dialects/>
 [waitress]: <https://docs.pylonsproject.org/projects/waitress/en/latest/>
