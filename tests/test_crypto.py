@@ -7,7 +7,7 @@ from hypothesis import strategies as st
 from app import crypto
 
 
-@given(raw_paste=st.builds(crypto.RawPaste), password=st.text())
+@given(raw_paste=st.builds(crypto.RawPaste), password=st.text(min_size=1))
 def test_encrypt_and_decrypt_paste(
     raw_paste: crypto.RawPaste,
     password: str,
@@ -21,7 +21,7 @@ def test_encrypt_and_decrypt_paste(
 
 @given(
     raw_paste=st.builds(crypto.RawPaste, data=st.text(min_size=100)),
-    password=st.text(),
+    password=st.text(min_size=1),
     compression_threshold_size=st.integers(min_value=100),
 )
 def test_encrypt_and_decrypt_with_compression_size(
