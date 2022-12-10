@@ -13,6 +13,8 @@ COMPRESSION_THRESHOLD_SIZE = 1 << 10
 
 
 def scrypt_derive_key(password: str, salt: bytes) -> bytes:
+    if not password:
+        raise ValueError("password must be greater than 0 bytes")
     return scrypt(
         password.encode(),
         salt=salt,
@@ -75,7 +77,9 @@ class RawPaste:
         packed version of ``data``.
 
         Args:
-            password: A string that encrypts paste data and title.
+            password:
+                A string that encrypts paste data and title. Must be greater
+                than 0 bytes.
             compression_threshold_size:
                 If the paste data size is greater than the threshold, it will
                 be compressed with ``zlib`` algorithm.
