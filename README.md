@@ -14,6 +14,7 @@
 - `zlib` compression of data
 - Custom expiration time of pastes, including "burn after read"
 - Paste titles and custom paste slugs
+- Paste View Counts
 - Support for all major SQL databases thanks to [SQLALchemy][sqlalchemy]
 - Schema protection using database migration scripts
 - Website security using strict CSP policy and CSRF tokens
