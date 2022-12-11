@@ -93,6 +93,9 @@ def ask_password(paste_id: str) -> Any:
             flash("Decryption failed! Incorrect password.", category="error")
             return redirect(url_for(".ask_password", paste_id=paste_id))
 
+        # increase the view count
+        db_secret.views = db_secret.views + 1
+
         # a burn after read paste: delete immediately
         if not db_secret.expires_after:
             flash(
@@ -102,7 +105,11 @@ def ask_password(paste_id: str) -> Any:
             )
 
             db.session.delete(db_secret)
-            db.session.commit()
+        else:
+            # update count if it is not a burn after read paste
+            db.session.add(db_secret)
+
+        db.session.commit()
 
         # build the reveal form and display the decrypted data
         reveal_form = RevealPasteForm()
@@ -112,6 +119,7 @@ def ask_password(paste_id: str) -> Any:
             form=reveal_form,
             paste_title=decrypted_paste.title or "Untitled",
             paste_created_at=db_secret.created_at.isoformat(),
+            views=db_secret.views,
         )
 
     return render_template(
