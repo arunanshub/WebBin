@@ -23,3 +23,4 @@ class Paste(Model):
         default=datetime.utcnow,
     )
     expires_after = db.Column(db.Interval(), nullable=False)
+    views = db.Column(db.Integer(), nullable=False, default=0)
