@@ -6,6 +6,7 @@ from datetime import timedelta
 from flask_wtf import FlaskForm
 from wtforms import (
     Field,
+    Form,
     PasswordField,
     SelectField,
     StringField,
@@ -16,6 +17,15 @@ from wtforms import (
 from wtforms.validators import DataRequired, Length, Regexp
 
 from app.models import Paste
+
+
+class UniquePasteID:
+    def __init__(self, message: str | None = None) -> None:
+        self._message = message or "The Paste ID '{id}' is already in use."
+
+    def __call__(self, _: Form, field: Field) -> None:
+        if Paste.query.filter_by(id=field.data).first():
+            raise ValidationError(self._message.format(id=field.data))
 
 
 class AcceptPasteForm(FlaskForm):
@@ -35,12 +45,14 @@ class AcceptPasteForm(FlaskForm):
     paste_id = StringField(
         "Slug/Paste ID",
         validators=[
-            Length(min=1, max=32),
             DataRequired(),
+            Length(min=1, max=32),
             Regexp(
                 r"^[a-zA-Z0-9-_]+$",
-                message="No whitespace or special characters allowed in slug!",
+                message="No whitespace or special characters allowed in paste"
+                " ID!",
             ),
+            UniquePasteID(),
         ],
         description="Slug or ID for the data. Edit me if you want a "
         "custom slug.",
@@ -72,10 +84,6 @@ class AcceptPasteForm(FlaskForm):
     )
 
     submit = SubmitField("Hide!")
-
-    def validate_paste_id(self, field: Field) -> None:
-        if Paste.query.filter_by(id=field.data).first():
-            raise ValidationError("The Paste ID is already in use.")
 
 
 class RevealPasteForm(FlaskForm):
