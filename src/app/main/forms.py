@@ -16,7 +16,8 @@ from wtforms import (
 )
 from wtforms.validators import DataRequired, Length, Regexp
 
-from app.models import Paste
+from .. import db
+from ..models import Paste
 
 
 class UniquePasteID:
@@ -24,7 +25,7 @@ class UniquePasteID:
         self._message = message or "The Paste ID '{id}' is already in use."
 
     def __call__(self, _: Form, field: Field) -> None:
-        if Paste.query.filter_by(id=field.data).first():
+        if db.session.get(Paste, field.data):
             raise ValidationError(self._message.format(id=field.data))
 
 

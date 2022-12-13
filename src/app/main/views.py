@@ -63,7 +63,7 @@ def ask_password(paste_id: str) -> Any:
     displays it using another form.
     """
     # check if the paste exists in our database
-    db_secret: Paste = Paste.query.filter_by(id=paste_id).first_or_404()
+    db_secret: Paste = db.get_or_404(Paste, paste_id)
 
     # check whether the requested paste has already expired
     if db_secret.expires_after and (
