@@ -28,13 +28,22 @@ Install WebBin using [Poetry](https://python-poetry.org/):
 poetry install
 ```
 
-Optionally, install Postgres drivers using:
+> I would recommend installing Poetry using [`pipx`](https://pypa.github.io/pipx/).
+
+### TL;DR
 
 ```shell
-poetry install -E postgres
+poetry install -E waitress -E postgres
 ```
 
-> I would recommend installing Poetry using [`pipx`](https://pypa.github.io/pipx/).
+or if you want to use [Gunicorn][gunicorn]:
+
+```shell
+poetry install -E gunicorn -E postgres
+```
+
+> I personally recommend using Waitress. However, your mileage and requirements
+> may vary.
 
 ### Installing Database Drivers
 
@@ -42,9 +51,41 @@ To communicate with a database, you would need a database connector. WebBin by
 default provides dependencies for SQLite and Postgres. However, you may install
 the [connectors supported by SQLALchemy.][sqlalchemy_dialects]
 
-### Why Postgres?
+WebBin by default provides "extras" dependencies for PostgreSQL. Install it
+using:
+
+```shell
+poetry install -E postgres
+```
+
+#### Why Postgres?
 
 Because I like it.
+
+### Installing WSGI Servers
+
+WebBin by default provides "extras" dependencies for both [Gunicorn][gunicorn]
+and [Waitress][waitress]. Install WSGI server using:
+
+To install Waitress:
+
+```shell
+poetry install -E waitress
+```
+
+> **Note**
+> Waitress runs on both UNIX and Windows.
+
+or
+
+To install Gunicorn:
+
+```shell
+poetry install -E gunicorn
+```
+
+> **Note**
+> Gunicorn runs on UNIX only.
 
 ## Running
 
@@ -81,10 +122,10 @@ Gunicorn is used by default.
 Run WebBin using [Gunicorn][gunicorn]:
 
 ```bash
-poetry run gunicorn wsgi:app -w 4
+poetry run gunicorn wsgi:app
 ```
 
-Or if you are on Windows, use [Waitress][waitress]:
+Or [Waitress][waitress]:
 
 ```bash
 poetry run waitress-serve wsgi:app
