@@ -8,7 +8,7 @@
 ## Features
 
 - Made using Bootstrap 5
-- Default high performance server thanks to [Gunicorn][gunicorn]
+- Default high performance server thanks to [Gunicorn][gunicorn] and [Waitress][waitress]
 - Password protection of data using password-cracking resistant KDF `scrypt`
 - AES-256-GCM encryption using [PyFLocker](https://github.com/arunanshub/pyflocker)
 - `zlib` compression of data
