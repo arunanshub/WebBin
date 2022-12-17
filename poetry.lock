@@ -1,6 +1,6 @@
 [[package]]
 name = "alembic"
-version = "1.8.1"
+version = "1.9.0"
 description = "A database migration tool for SQLAlchemy."
 category = "main"
 optional = false
@@ -633,22 +633,15 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pyflocker"
-version = "0.3.1"
+version = "0.4.0"
 description = "Python Cryptographic (File Locking) Library"
 category = "main"
 optional = false
-python-versions = "^3.8"
-develop = false
+python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
-cryptography = {version = ">=35.0.0,!=37.0.0", extras = ["ssh"]}
-pycryptodomex = "^3.9.8"
-
-[package.source]
-type = "git"
-url = "https://github.com/arunanshub/pyflocker.git"
-reference = "HEAD"
-resolved_reference = "46f9d900b65b9984a74b27d4fca35c849c5bf8bc"
+cryptography = {version = ">=35.0.0,<37.0.0 || >37.0.0", extras = ["ssh"]}
+pycryptodomex = ">=3.9.8,<4.0.0"
 
 [[package]]
 name = "pygments"
@@ -919,12 +912,12 @@ waitress = ["waitress"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<4.0"
-content-hash = "2852f581b5ced7329008aba802462b57a2f9f32f08f03f512befa0f995bc5505"
+content-hash = "32a7256977caae72e7fd3a7e383167f64f4c8ab4acda93c429bc4d4242fcd8fd"
 
 [metadata.files]
 alembic = [
-    {file = "alembic-1.8.1-py3-none-any.whl", hash = "sha256:0a024d7f2de88d738d7395ff866997314c837be6104e90c5724350313dee4da4"},
-    {file = "alembic-1.8.1.tar.gz", hash = "sha256:cd0b5e45b14b706426b833f06369b9a6d5ee03f826ec3238723ce8caaf6e5ffa"},
+    {file = "alembic-1.9.0-py3-none-any.whl", hash = "sha256:e8ce855f731d92cfdbf9a71d148401fcc420399927817c6e2c0b6a5f31db745d"},
+    {file = "alembic-1.9.0.tar.gz", hash = "sha256:6af6792fe699730b27480382701b16028ebbaac6bc5cd4f06daf5fa3e4690364"},
 ]
 appnope = [
     {file = "appnope-0.1.3-py2.py3-none-any.whl", hash = "sha256:265a455292d0bd8a72453494fa24df5a11eb18373a60c7c0430889f22548605e"},
@@ -1466,7 +1459,10 @@ pycryptodomex = [
     {file = "pycryptodomex-3.16.0-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:0ba28aa97cdd3ff5ed1a4f2b7f5cd04e721166bd75bd2b929e2734433882b583"},
     {file = "pycryptodomex-3.16.0.tar.gz", hash = "sha256:e9ba9d8ed638733c9e95664470b71d624a6def149e2db6cc52c1aca5a6a2df1d"},
 ]
-pyflocker = []
+pyflocker = [
+    {file = "pyflocker-0.4.0-py3-none-any.whl", hash = "sha256:d02600ee3b98da6519295378f82be9d35227044d0bf8c519231f826e033b5e1a"},
+    {file = "pyflocker-0.4.0.tar.gz", hash = "sha256:24a0443b7156132735df228573506372147cd759c01c0df53483770c71414ad3"},
+]
 pygments = [
     {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
     {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"},

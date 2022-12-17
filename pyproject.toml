@@ -16,7 +16,7 @@ bootstrap-flask = "^2.2.0"
 flask-talisman = "^1.0.0"
 flask-minify = "^0.41"
 flask-migrate = "^4.0.0"
-pyflocker = { git = "https://github.com/arunanshub/pyflocker.git" }
+pyflocker = "^0.4.0"
 python-dotenv = "^0.21.0"
 # sql connectors
 psycopg2-binary = { version = "^2.9.5", optional = true }
