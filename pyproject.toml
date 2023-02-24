@@ -17,7 +17,7 @@ flask-talisman = "^1.0.0"
 flask-minify = "^0.41"
 flask-migrate = "^4.0.0"
 pyflocker = "^0.4.0"
-python-dotenv = "^0.21.0"
+python-dotenv = "^1.0.0"
 # sql connectors
 psycopg2-binary = { version = "^2.9.5", optional = true }
 # web servers
