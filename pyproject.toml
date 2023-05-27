@@ -19,18 +19,19 @@ flask-migrate = "^4.0.0"
 pyflocker = "^0.4.0"
 python-dotenv = "^1.0.0"
 # sql connectors
-psycopg2-binary = { version = "^2.9.5", optional = true }
+psycopg = {version = "^3.1.7", extras = ["binary"], optional = true}
 # web servers
 gunicorn = { version = "^20.1.0", optional = true, markers = "sys_platform != 'win32'" }
 waitress = { version = "^2.1.2", optional = true }
 
 [tool.poetry.extras]
-postgres = ["psycopg2-binary"]
+postgres = ["psycopg"]
 waitress = ["waitress"]
 gunicorn = ["gunicorn"]
 
 [tool.poetry.group.dev.dependencies]
 flask-shell-ipython = "^0.4.1"
+types-flask-migrate = "^4.0.0.4"
 
 [tool.poetry.group.tests.dependencies]
 hypothesis = "^6.58.1"
@@ -39,20 +40,25 @@ pytest-randomly = "^3.12.0"
 pytest-xdist = "^3.0.2"
 pytest-cov = "^4.0.0"
 
-[tool.pycln]
-all = true
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 79
 target-verson = "py38"
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-line_length = 79
-profile = "black"
-add_imports = ["from __future__ import annotations"]
+[tool.ruff]
+line-length = 79
+target-version = "py38"
+exclude = ["tests", "migrations"]
+ignore = [
+    "ANN101",
+    "ANN102",
+    "ANN401",
+    "B024",
+]
+select = ["ANN", "B", "E", "F", "W", "I", "RET", "EM", "UP", "C90"]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.ruff.isort]
+required-imports = ["from __future__ import annotations"]
