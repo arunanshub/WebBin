@@ -489,18 +489,17 @@ xxhash = "*"
 
 [[package]]
 name = "flask-shell-ipython"
-version = "0.4.1"
+version = "0.5.1"
 description = "Replace default `flask shell` command by similar command running IPython."
 optional = false
-python-versions = "*"
+python-versions = ">=3.6, <4"
 files = [
-    {file = "flask-shell-ipython-0.4.1.tar.gz", hash = "sha256:fb3b390f4dc03d7a960c62c5b51ce4deca19ceff77e4db3d4670012adc529ebd"},
-    {file = "flask_shell_ipython-0.4.1-py2.py3-none-any.whl", hash = "sha256:f212b4fad6831edf652799c719cd05fd0716edfaa5506eb41ff9ef09109890d3"},
+    {file = "flask_shell_ipython-0.5.1-py2.py3-none-any.whl", hash = "sha256:8c948c0721bcc5b8eb274e1831c8a428dfc693099609c33d2f330091782cce10"},
 ]
 
 [package.dependencies]
 click = "*"
-flask = ">=1.0"
+Flask = ">=1.0"
 IPython = ">=5.0.0"
 
 [[package]]
@@ -1808,4 +1807,4 @@ waitress = ["waitress"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "760924365d23bb5b2266bd39f3fe6995b9247b917d7e6734db8d435a9271a6a7"
+content-hash = "18e3f6431d39d98e3db786484a65104f0c40c754782396161b480dab57fbce36"
