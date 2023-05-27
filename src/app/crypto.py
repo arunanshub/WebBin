@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import os
 import zlib
 from dataclasses import dataclass
 from hashlib import scrypt
 
-from flask_migrate import os
 from pyflocker.ciphers import AES, base
 from pyflocker.ciphers.backends import exc
 
@@ -14,7 +14,8 @@ COMPRESSION_THRESHOLD_SIZE = 1 << 10
 
 def scrypt_derive_key(password: str, salt: bytes) -> bytes:
     if not password:
-        raise ValueError("password must be greater than 0 bytes")
+        msg = "password must be greater than 0 bytes"
+        raise ValueError(msg)
     return scrypt(
         password.encode(),
         salt=salt,
@@ -54,8 +55,9 @@ class EncryptedPaste:
         # fail if incorrect password
         try:
             cipher.finalize(tag)
-        except exc.DecryptionError:
-            raise ValueError("Failed to decrypt data")
+        except exc.DecryptionError as e:
+            msg = "Failed to decrypt data"
+            raise ValueError(msg) from e
         # decompress data if it has been compressed
         if self.is_compressed:
             paste = zlib.decompress(paste)

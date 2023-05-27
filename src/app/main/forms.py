@@ -3,8 +3,8 @@ from __future__ import annotations
 from collections import OrderedDict
 from datetime import timedelta
 
-from flask_wtf import FlaskForm
-from wtforms import (
+from flask_wtf import FlaskForm  # type: ignore[import]
+from wtforms import (  # type: ignore[import]
     Field,
     Form,
     PasswordField,
@@ -14,7 +14,11 @@ from wtforms import (
     TextAreaField,
     ValidationError,
 )
-from wtforms.validators import DataRequired, Length, Regexp
+from wtforms.validators import (  # type: ignore[import]
+    DataRequired,
+    Length,
+    Regexp,
+)
 
 from .. import db
 from ..models import Paste

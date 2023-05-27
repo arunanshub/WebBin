@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from flask import Flask
-from flask_bootstrap import Bootstrap5
-from flask_minify import Minify
+from flask_bootstrap import Bootstrap5  # type: ignore[import]
+from flask_minify import Minify  # type: ignore[import]
 from flask_sqlalchemy import SQLAlchemy
-from flask_talisman import Talisman
+from flask_talisman import Talisman  # type: ignore[import]
 
 from config import CONFIG
 

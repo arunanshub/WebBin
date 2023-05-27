@@ -44,7 +44,10 @@ class ProductionConfig(Config):
         # handle reverse proxy server headers
         from werkzeug.middleware.proxy_fix import ProxyFix
 
-        app.wsgi_app = ProxyFix(app.wsgi_app, x_host=1)
+        app.wsgi_app = ProxyFix(  # type: ignore[method-assign]
+            app.wsgi_app,
+            x_host=1,
+        )
 
 
 CONFIG = {
