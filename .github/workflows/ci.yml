@@ -43,7 +43,7 @@ jobs:
       - name: Lint with Mypy and Flake8
         run: |
           poetry run pre-commit run --all mypy
-          poetry run pre-commit run --all flake8
+          poetry run pre-commit run --all ruff
 
   build:
     needs: [lint]
