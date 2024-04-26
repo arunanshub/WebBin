@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from logging.config import fileConfig
+import typing
 
 from alembic import context
 from flask import current_app
@@ -27,19 +28,21 @@ config.set_main_option(
 )
 target_db = current_app.extensions["migrate"].db
 
+TargetDbMetadataType = type[target_db.metadata]
+
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
 
-def get_metadata():
+def get_metadata() -> TargetDbMetadataType:
     if hasattr(target_db, "metadatas"):
         return target_db.metadatas[None]
     return target_db.metadata
 
 
-def run_migrations_offline():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -60,7 +63,7 @@ def run_migrations_offline():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
@@ -71,7 +74,7 @@ def run_migrations_online():
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
     # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
-    def process_revision_directives(context, revision, directives):
+    def process_revision_directives(context, revision, directives) -> None:
         if getattr(config.cmd_opts, "autogenerate", False):
             script = directives[0]
             if script.upgrade_ops.is_empty():
@@ -83,7 +86,7 @@ def run_migrations_online():
     with connectable.connect() as connection:
         context.configure(
             connection=connection,
-            target_metadata=get_metadata(),
+            target_metadata=get_metadata(),  # type: ignore[arg-type]
             process_revision_directives=process_revision_directives,
             **current_app.extensions["migrate"].configure_args,
         )

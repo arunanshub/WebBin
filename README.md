@@ -1,4 +1,4 @@
-# WebBin: The Based Pastebin
+# WebBin: The Based Pastebin.
 
 [![CI](https://github.com/arunanshub/WebBin/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/WebBin/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/arunanshub/WebBin/badge.svg?branch=master)](https://coveralls.io/github/arunanshub/WebBin?branch=master)
@@ -22,28 +22,31 @@
 
 ## Installation
 
-Install WebBin using [Poetry](https://python-poetry.org/):
+Install WebBin using [PDM](https://pdm-project.org/):
 
 ```shell
-poetry install
+pdm install
 ```
 
-> I would recommend installing Poetry using [`pipx`](https://pypa.github.io/pipx/).
+> I would recommend installing PDM using [`pipx`](https://pypa.github.io/pipx/).
 
 ### TL;DR
 
-```shell
-poetry install -E waitress -E postgres
+```sh
+pdm install -G waitress,postgres
 ```
 
 or if you want to use [Gunicorn][gunicorn]:
 
-```shell
-poetry install -E gunicorn -E postgres
+```sh
+pdm install -G gunicorn,postgres
 ```
 
-> I personally recommend using Waitress. However, your mileage and requirements
-> may vary.
+and run with
+
+```sh
+pdm deploy && pdm start
+```
 
 ### Installing Database Drivers
 
@@ -55,7 +58,7 @@ WebBin by default provides "extras" dependencies for PostgreSQL. Install it
 using:
 
 ```shell
-poetry install -E postgres
+pdm install -G postgres
 ```
 
 #### Why Postgres?
@@ -70,7 +73,7 @@ and [Waitress][waitress]. Install WSGI server using:
 To install Waitress:
 
 ```shell
-poetry install -E waitress
+pdm install -G waitress
 ```
 
 > **Note**
@@ -81,7 +84,7 @@ or
 To install Gunicorn:
 
 ```shell
-poetry install -E gunicorn
+pdm install -G gunicorn
 ```
 
 > **Note**
@@ -109,7 +112,7 @@ Can be a possible configuration for production environment. See
 Run the following command to automatically migrate your database:
 
 ```bash
-poetry run flask deploy
+pdm run deploy
 ```
 
 This command will not only apply migrations to your database, but also prepare
@@ -122,20 +125,23 @@ Gunicorn is used by default.
 Run WebBin using [Gunicorn][gunicorn]:
 
 ```bash
-poetry run gunicorn wsgi:app
+pdm run start
 ```
 
 Or [Waitress][waitress]:
 
 ```bash
-poetry run waitress-serve wsgi:app
+pdm run start-waitress
 ```
 
 Or if you want a development web server:
 
 ```bash
-poetry run flask -A wsgi:app
+pdm run start-dev
 ```
+
+> **Note**
+> All `pdm run` scripts can be found in `pyproject.toml` under `tool.pdm.scripts`.
 
 ## Configuration
 
