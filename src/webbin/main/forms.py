@@ -3,8 +3,8 @@ from __future__ import annotations
 from collections import OrderedDict
 from datetime import timedelta
 
-from flask_wtf import FlaskForm  # type: ignore[import]
-from wtforms import (  # type: ignore[import]
+from flask_wtf import FlaskForm  # type: ignore[import-untyped]
+from wtforms import (
     Field,
     Form,
     PasswordField,
@@ -14,14 +14,14 @@ from wtforms import (  # type: ignore[import]
     TextAreaField,
     ValidationError,
 )
-from wtforms.validators import (  # type: ignore[import]
+from wtforms.validators import (
     DataRequired,
     Length,
     Regexp,
 )
 
-from .. import db
-from ..models import Paste
+from webbin import db
+from webbin.models import Paste
 
 
 class UniquePasteID:

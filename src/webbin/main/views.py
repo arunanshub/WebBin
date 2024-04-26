@@ -6,9 +6,10 @@ from typing import Any
 
 from flask import abort, current_app, flash, redirect, render_template, url_for
 
-from .. import db
-from ..crypto import EncryptedPaste, RawPaste
-from ..models import Paste
+from webbin import db
+from webbin.crypto import EncryptedPaste, RawPaste
+from webbin.models import Paste
+
 from . import main
 from .forms import AcceptPasteForm, AskPasswordForm, RevealPasteForm
 
