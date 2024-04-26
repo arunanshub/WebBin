@@ -2,6 +2,9 @@
 
 [![CI](https://github.com/arunanshub/WebBin/actions/workflows/ci.yml/badge.svg)](https://github.com/arunanshub/WebBin/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/arunanshub/WebBin/badge.svg?branch=master)](https://coveralls.io/github/arunanshub/WebBin?branch=master)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 ![Website Image](static/website.png)
 
