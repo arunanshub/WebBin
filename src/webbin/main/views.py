@@ -15,6 +15,9 @@ from .forms import AcceptPasteForm, AskPasswordForm, RevealPasteForm
 
 
 def _encrypt_data_from_form(form: AcceptPasteForm) -> EncryptedPaste:
+    assert form.paste_title.data is not None
+    assert form.text.data is not None
+    assert form.password.data is not None
     return RawPaste(form.paste_title.data, form.text.data).encrypt(
         form.password.data,
         current_app.config.get("COMPRESSION_THRESHOLD_SIZE"),
@@ -86,6 +89,7 @@ def ask_password(paste_id: str) -> Any:
             db_secret.token,
             db_secret.is_compressed,
         )
+        assert ask_password_form.password.data is not None
         try:
             decrypted_paste = payload.decrypt(
                 ask_password_form.password.data,

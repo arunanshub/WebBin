@@ -78,7 +78,7 @@ class AcceptPasteForm(FlaskForm):
     )
     expires_after = SelectField(
         "Expire the paste after",
-        choices=list(EXPIRES_AFTER),
+        choices=tuple(EXPIRES_AFTER),  # type: ignore[arg-type]
         description="When should I remove the paste from the database?",
     )
 

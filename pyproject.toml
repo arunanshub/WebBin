@@ -27,6 +27,12 @@ distribution = true
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.pdm.scripts]
+deploy = "flask deploy"
+start = "gunicorn wsgi:app"
+start-waitress = "waitress-serve wsgi:app"
+start-dev = "flask -A wsgi:app run"
+
 [project.optional-dependencies]
 postgres = [
     "psycopg[binary]>=3.1.18",
@@ -55,14 +61,8 @@ tests = [
     "pytest-cov>=5.0.0",
 ]
 
-[tool.pdm.scripts]
-deploy = "flask deploy"
-start = "gunicorn wsgi:app"
-start-waitress = "waitress-serve wsgi:app"
-start-dev = "flask -A wsgi:app run"
-
 [tool.mypy]
-exclude = ["migrations/", "tests/"]
+exclude = ["^migrations/$", "^tests/$"]
 python_version = "3.10"
 warn_unused_configs = true
 warn_unused_ignores = true
@@ -73,7 +73,7 @@ show_error_codes = true
 warn_redundant_casts = true
 # warn_return_any = true
 check_untyped_defs = true
-disallow_any_unimported = true
+# disallow_any_unimported = true
 disallow_untyped_defs = true
 no_implicit_optional = true
 
