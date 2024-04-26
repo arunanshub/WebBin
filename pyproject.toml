@@ -20,18 +20,9 @@ version = "0.1.0"
 description = "The Based Pastebin"
 readme = "README.md"
 
-[tool.pdm]
-distribution = true
-
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
-
-[tool.pdm.scripts]
-deploy = "flask deploy"
-start = "gunicorn wsgi:app"
-start-waitress = "waitress-serve wsgi:app"
-start-dev = "flask -A wsgi:app run"
 
 [project.optional-dependencies]
 postgres = [
@@ -42,23 +33,6 @@ gunicorn = [
 ]
 waitress = [
     "waitress>=3.0.0",
-]
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "flask-shell-ipython>=0.5.1",
-    "types-flask-migrate>=4.0.0.20240311",
-    "mypy>=1.9.0",
-    "types-wtforms>=3.1.0.20240311",
-    "ruff>=0.3.7",
-    "build>=1.2.1",
-]
-tests = [
-    "hypothesis>=6.100.1",
-    "pytest>=8.1.1",
-    "pytest-randomly>=3.15.0",
-    "pytest-xdist>=3.5.0",
-    "pytest-cov>=5.0.0",
 ]
 
 [tool.mypy]
@@ -106,3 +80,30 @@ select = [
 combine-as-imports = true
 force-wrap-aliases = true
 required-imports = ["from __future__ import annotations"]
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.scripts]
+deploy = "flask deploy"
+start = "gunicorn wsgi:app"
+start-waitress = "waitress-serve wsgi:app"
+start-dev = "flask -A wsgi:app run"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "flask-shell-ipython>=0.5.1",
+    "types-flask-migrate>=4.0.0.20240311",
+    "mypy>=1.9.0",
+    "types-wtforms>=3.1.0.20240311",
+    "ruff>=0.3.7",
+    "build>=1.2.1",
+    "pre-commit>=3.7.0",
+]
+tests = [
+    "hypothesis>=6.100.1",
+    "pytest>=8.1.1",
+    "pytest-randomly>=3.15.0",
+    "pytest-xdist>=3.5.0",
+    "pytest-cov>=5.0.0",
+]
