@@ -5,7 +5,7 @@
 groups = ["default", "dev", "tests"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:fbd06a405a08dc5c8643941ff60c0d5f5a67e71032051ee0e1c2a11e9be1927a"
+content_hash = "sha256:2546e9b3842835ac7fd24e0524c2fb0e01fff43e4df8ffa00fb5a62218b5b9f6"
 
 [[package]]
 name = "alembic"
@@ -132,7 +132,7 @@ version = "1.16.0"
 requires_python = ">=3.8"
 summary = "Foreign Function Interface for Python calling C code."
 groups = ["default"]
-marker = "platform_python_implementation != \"PyPy\""
+marker = "platform_python_implementation != \"PyPy\" or platform_system == \"Linux\""
 dependencies = [
     "pycparser",
 ]
@@ -499,6 +499,21 @@ dependencies = [
     "rcssmin",
     "six",
     "xxhash",
+]
+files = [
+    {file = "Flask-Minify-0.47.tar.gz", hash = "sha256:e0e36190295ee6a4fa90d7c832dc68557b46e198e547ade0e5cc93d0c91597b1"},
+    {file = "Flask_Minify-0.47-py3-none-any.whl", hash = "sha256:b1f04ed113e9bb30d37c86ba978456898c42539e57a91bbbe2b472be31b9e2b2"},
+]
+
+[[package]]
+name = "flask-minify"
+version = "0.47"
+extras = ["go"]
+summary = "Flask extension to minify html, css, js and less."
+groups = ["default"]
+dependencies = [
+    "flask-minify==0.47",
+    "tdewolff-minify>=2.20.34; platform_system == \"Linux\"",
 ]
 files = [
     {file = "Flask-Minify-0.47.tar.gz", hash = "sha256:e0e36190295ee6a4fa90d7c832dc68557b46e198e547ade0e5cc93d0c91597b1"},
@@ -995,7 +1010,7 @@ version = "2.22"
 requires_python = ">=3.8"
 summary = "C parser in Python"
 groups = ["default"]
-marker = "platform_python_implementation != \"PyPy\""
+marker = "platform_python_implementation != \"PyPy\" or platform_system == \"Linux\""
 files = [
     {file = "pycparser-2.22-py3-none-any.whl", hash = "sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc"},
     {file = "pycparser-2.22.tar.gz", hash = "sha256:491c8be9c040f5390f5bf44a5b07752bd07f56edf992381b05c701439eec10f6"},
@@ -1302,6 +1317,53 @@ dependencies = [
 files = [
     {file = "stack_data-0.6.3-py3-none-any.whl", hash = "sha256:d5558e0c25a4cb0853cddad3d77da9891a08cb85dd9f9f91b9f8cd66e511e695"},
     {file = "stack_data-0.6.3.tar.gz", hash = "sha256:836a778de4fec4dcd1dcd89ed8abff8a221f58308462e1c4aa2a3cf30148f0b9"},
+]
+
+[[package]]
+name = "tdewolff-minify"
+version = "2.20.34"
+summary = "Go minifiers for web formats"
+groups = ["default"]
+marker = "platform_system == \"Linux\""
+dependencies = [
+    "cffi>=1.0.0",
+]
+files = [
+    {file = "tdewolff_minify-2.20.34-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:34242c72d8288197d85f0b0abfb451ea1d04e96c7289f92db7b1f5af287166fe"},
+    {file = "tdewolff_minify-2.20.34-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:33520ed71211f8d011869e77f6a31a6d58b471e2d853ca65a4555fc609a7df48"},
+    {file = "tdewolff_minify-2.20.34-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:dd4295333a9cbb937ef4fd13c29a085da4238210a8bab94532e2b1301c3015e4"},
+    {file = "tdewolff_minify-2.20.34-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:879fb7904365cdc208e3dc522bd77cb65f69a8c28abcf4c1b00453e1c9b2aa81"},
+    {file = "tdewolff_minify-2.20.34-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:e1e744927532a68aa6396a5c214353737af127ae2871a2615e40ed2d044cacc6"},
+    {file = "tdewolff_minify-2.20.34-cp310-cp310-win_amd64.whl", hash = "sha256:e1304ee58b5a3e29e549bf86f094ae555d3e2390901573e92c594c4613033f77"},
+    {file = "tdewolff_minify-2.20.34-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:96a7751a4cc9cc7b9b2b00c31126755663a4e814f93221b05fe9e094516e1c24"},
+    {file = "tdewolff_minify-2.20.34-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b9adaffdd539e9fd483631defc7b6ecbb0a2d1c9b53cdeaaa0dd0dfdd9999048"},
+    {file = "tdewolff_minify-2.20.34-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b4b1b2a43969333952207fdf1a8485a0a8798c2aaeff246b4fdf51f69f2e6d32"},
+    {file = "tdewolff_minify-2.20.34-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:92b277d79b8adbfbe48b7c65b265729b79de355ac26821d98b31ec97e7340d5f"},
+    {file = "tdewolff_minify-2.20.34-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:b938e49a2ec80fab3d1fd19f5a094414845b93b92fdacb320f8d747ccf238d84"},
+    {file = "tdewolff_minify-2.20.34-cp311-cp311-win_amd64.whl", hash = "sha256:bc54f5ad5cbfeae4a62bcb3813dff9a782b31ef2dc3ab111b051fe1120121338"},
+    {file = "tdewolff_minify-2.20.34-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:b85801abdaef8f8d7de80fa64e266919b2f21d98640a0db73c99db5cbc5e0a8d"},
+    {file = "tdewolff_minify-2.20.34-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:20cc1a150e67b686fa745b8a1d345cd1e34e5ad60830b4ada215e7903fd3eaff"},
+    {file = "tdewolff_minify-2.20.34-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5c91f1ad3e94c163fcf4b2764b7e9fde8ffebccef26c3a4f800dd6ccf88df1fc"},
+    {file = "tdewolff_minify-2.20.34-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:c306ad1f57a72ebffbcb295510bda45684264f30fe1cdcbc2bfdc8cbc0ba1449"},
+    {file = "tdewolff_minify-2.20.34-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:f9d56a0e99056b094686f5eae38afcf095e284e8d1487c71342036e689ad5d6f"},
+    {file = "tdewolff_minify-2.20.34-cp312-cp312-win_amd64.whl", hash = "sha256:3d3190821c747e30736eab7bef7c6ed8141950373b19194acb28c88ea2429a20"},
+    {file = "tdewolff_minify-2.20.34-pp310-pypy310_pp73-macosx_10_9_x86_64.whl", hash = "sha256:75dbaefd8ea184af8a3a447909d6b15d5cf1adc386925f9da4c1137d0dbc58df"},
+    {file = "tdewolff_minify-2.20.34-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:13f1fc1bab42a42f08c41e4ec3bd94e0a887a76cb57c2db6b59cabdc88269fc8"},
+    {file = "tdewolff_minify-2.20.34-pp310-pypy310_pp73-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:be84cab89c28291760b88591ba0a3621eb8a1c960c6ebed0086fc6d70ce5c5ec"},
+    {file = "tdewolff_minify-2.20.34-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:1e12d84441bff43da94220fe0acf1a92b853bcfd2744076286238e66dd481857"},
+    {file = "tdewolff_minify-2.20.34-pp37-pypy37_pp73-macosx_10_9_x86_64.whl", hash = "sha256:015caa3a8edc8bf772851e258496dea479296b0527be112a52cb5007ede512a9"},
+    {file = "tdewolff_minify-2.20.34-pp37-pypy37_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:67b9a89e62a3676984343f1f559acb85ca7afad170a41617b2099665390e9dd5"},
+    {file = "tdewolff_minify-2.20.34-pp37-pypy37_pp73-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:3b57a3d4d3956813b9e3121b9fac2891467a0fe7375009a81450dbe054d0f73e"},
+    {file = "tdewolff_minify-2.20.34-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:881be2c73abd02f9eaaa39e35ae94b7106c4cf9171099b5f64d5624c6ba38739"},
+    {file = "tdewolff_minify-2.20.34-pp38-pypy38_pp73-macosx_10_9_x86_64.whl", hash = "sha256:26f7e6704540d2f51975393d2ffba1fca3fc0d6ae75e0e81bda9d109d754a10b"},
+    {file = "tdewolff_minify-2.20.34-pp38-pypy38_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:efbde685b17331acda66a983a7294fef89dc74e0109859c689ddd18db166aa39"},
+    {file = "tdewolff_minify-2.20.34-pp38-pypy38_pp73-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:fc095b85f3322c2fa596d97d1fcf10d0efbc32ecfea39d98d5370e685c4d19c6"},
+    {file = "tdewolff_minify-2.20.34-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:1d124aedf4bcdb74618c38d6dc58c85bb346474ccf8157509fe145feb7a89c15"},
+    {file = "tdewolff_minify-2.20.34-pp39-pypy39_pp73-macosx_10_9_x86_64.whl", hash = "sha256:ba6bcd3a7ea8c35bf8c570c8e85b021a008b8b5a5a7d48dfc1bc8a1381a7ece3"},
+    {file = "tdewolff_minify-2.20.34-pp39-pypy39_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:15464d1fc5583442edbeb43a0ba1db18bc69aea4141214f3ea2ec2b1023aca99"},
+    {file = "tdewolff_minify-2.20.34-pp39-pypy39_pp73-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:85516d1b5b74c00b817f6442dee0c0250f024ac296c8de8d4f23bea5d14e35fe"},
+    {file = "tdewolff_minify-2.20.34-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:474727a07255ce547a9d202396e4cea18e7c554c52fe21156a3eda405d10ec8c"},
+    {file = "tdewolff_minify-2.20.34.tar.gz", hash = "sha256:df8bd87a8d2859abd84255fbb0526e3410f06d13488191b10f662475a4baa176"},
 ]
 
 [[package]]
